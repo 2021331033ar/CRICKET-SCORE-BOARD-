@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,22 @@ int run = 0;
 int over = 0;
 int ball = 0;
 int wicket = 0;
+
+char content[255] = " ";
+
+char scoreStr[4];
+char wicketStr[2];
+char overStr[100];
+char ballStr[1];
+
+void createHTML() {
+    FILE *pFile = fopen("score11.html", "w");
+    fprintf(pFile, "<html><body><h3>");
+    fprintf(pFile, content);
+    fprintf(pFile, "</h3>");
+    fprintf(pFile, "</body></html>");
+    fclose(pFile);
+}
 
 void printLiveScore() {
     printf("\nLive Score:\n");
@@ -21,8 +38,13 @@ int main() {
     printf("Enter overs and wickets: ");
     scanf("%d%d", &o, &w);
     printf("%d overs & %d wickets", o, w);
+/* int x;
+          printf("\nEnter run range : ");
+          scanf("%d",&x);
+*/
     while (1) {
-       //printLiveScore();
+     printLiveScore();
+
 
         printf("\n Show live score, '0' press again ");
         scanf("%d", &score);
@@ -80,7 +102,7 @@ int main() {
                         break;
                     }
                     default:
-                        printf("\nDad Ball\n");
+                        printf("\nDead Ball\n");
                 }
                 break;
             }
@@ -112,15 +134,14 @@ int main() {
                         break;
                     }
                     default:
-                        printf("\nDad Ball\n");
+                        printf("\nDead Ball\n");
                 }
                 break;
             }
           case 3 : {
                 srand(time(NULL));
                 int random = (rand() % 4);
-
-                switch(random){
+switch(random){
                 case 0 : {
                 run +=3;
                 ball +=1;
@@ -142,11 +163,11 @@ int main() {
                 run +=3;
                 ball +=1;
                 wicket +=1;
-                printf("\nWicket gone and triple run.\n");
+                printf("\nWicket gone and double run.\n");
                 break;
                 }
                 default :
-                    printf("\nDad Ball\n");
+                    printf("\nDead Ball\n");
                 }
                 break;
             }
@@ -161,7 +182,7 @@ int main() {
                         break;
                     }
                     default:
-                        printf("\nDad Ball\n");
+                        printf("\nDead Ball\n");
                 }
                 break;
             }
@@ -181,7 +202,7 @@ int main() {
                         break;
                     }
                     default:
-                        printf("\nDad Ball\n");
+                        printf("\nDead Ball\n");
                 }
                 break;
             }
@@ -197,7 +218,7 @@ int main() {
                         break;
                     }
                     default:
-                        printf("\nDad Ball\n");
+                        printf("\nDead Ball\n");
                 }
                 break;
             }
@@ -212,7 +233,7 @@ int main() {
                         break;
                     }
                     default:
-                        printf("\nDad Ball\n");
+                        printf("\nDead Ball\n");
                 }
                 break;
             }
@@ -224,28 +245,49 @@ int main() {
             default: {
                 printf("\nThis is an invalid input\n");
             }
+
+
+
         }
 
-        if (ball == 6) {
+        // convert integer to string and store string variable
+
+        sprintf(scoreStr, "%d", run);
+        sprintf(wicketStr, "%d", wicket);
+        sprintf(overStr, "%d", over);
+        sprintf(ballStr, "%d", ball);
+
+
+       strcat(content, " \n");
+        strcat(content, "Score: \n ");
+        strcat(content,  scoreStr);
+        strcat(content, " / ");
+        strcat(content, wicketStr);
+        strcat(content, " \n");
+        strcat(content, "\nOvers: ");
+        strcat(content, overStr);
+        strcat(content, ".");
+        strcat(content, ballStr);
+        strcat(content, "\n");
+
+        createHTML();
+if (ball == 6) {
             over += 1;
             ball = 0;
         }
         if (wicket == w) {
-                printf("\nWicket ended.\n");
-            printf("\nInnings Ended\n");
-            //printf("Target : %d",run+1);
+                 printf("Wicket Ended\n");
+            printf("Innings Ended\n");
+            printf("Target : %d",run+1);
             break;
         }
         if (over == o) {
-                printf("\nOver ended.\n");
-            printf("\nInnings Ended\n");
-            //printf("Target : %d",run+1);
+             printf("Over Ended\n");
+            printf("Innings Ended\n");
+            printf("Target : %d",run+1);
             break;
         }
-        printLiveScore();
-
-    }
-    printLiveScore();
-
-    printf("\nTarget : %d",run+1);
+       strcpy(content,"");
+       system("cls");
+}
 }
